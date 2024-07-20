@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "557539710439",
+    "project_id": "student-database-a007d",
+    "storage_bucket": "student-database-a007d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557539710439:android:dc006e029e24a1a6839942",
+        "android_client_info": {
+          "package_name": "com.example.studentdatabase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNKCICZWl4xwLNymeQBTxJI9iTsockg3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
