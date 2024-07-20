@@ -61,54 +61,54 @@ class StudentMapViewActivity : AppCompatActivity(), OnMapReadyCallback {
         val viewModelFactory = StudentViewModelFactory(repository)
         studentViewModel = ViewModelProvider(this, viewModelFactory).get(StudentsViewModel::class.java)
 
-        studentViewModel.students.observe(this) { students ->
-            // Ensure the map is initialized before adding markers
-            if (::mMap.isInitialized) {
-                students.forEach { student ->
-                    val lat = student.latitude.toDoubleOrNull()
-                    val lng = student.longitude.toDoubleOrNull()
-
-                    if (lat != null && lng != null) {
-                        val latLng = LatLng(lat, lng)
-                        mMap.addMarker(MarkerOptions().position(latLng).title(student.name))
-                    } else {
-                        Log.e("StudentMapViewActivity", "Invalid coordinates for student: ${student.name}. Latitude: $lat, Longitude: $lng")
-                    }
-                }
-
-                // Optionally adjust the camera to fit all markers
-                if (students.isNotEmpty()) {
-                    val bounds = LatLngBounds.Builder()
-                    students.forEach { student ->
-                        val lat = student.latitude.toDoubleOrNull()
-                        val lng = student.longitude.toDoubleOrNull()
-                        if (lat != null && lng != null) {
-                            bounds.include(LatLng(lat, lng))
-                        }
-                    }
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100))
-                }
-            }
-        }
+//        studentViewModel.students.observe(this) { students ->
+//            // Ensure the map is initialized before adding markers
+//            if (::mMap.isInitialized) {
+//                students.forEach { student ->
+//                    val lat = student.latitude.toDoubleOrNull()
+//                    val lng = student.longitude.toDoubleOrNull()
+//
+//                    if (lat != null && lng != null) {
+//                        val latLng = LatLng(lat, lng)
+//                        mMap.addMarker(MarkerOptions().position(latLng).title(student.name))
+//                    } else {
+//                        Log.e("StudentMapViewActivity", "Invalid coordinates for student: ${student.name}. Latitude: $lat, Longitude: $lng")
+//                    }
+//                }
+//
+//                // Optionally adjust the camera to fit all markers
+//                if (students.isNotEmpty()) {
+//                    val bounds = LatLngBounds.Builder()
+//                    students.forEach { student ->
+//                        val lat = student.latitude.toDoubleOrNull()
+//                        val lng = student.longitude.toDoubleOrNull()
+//                        if (lat != null && lng != null) {
+//                            bounds.include(LatLng(lat, lng))
+//                        }
+//                    }
+//                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100))
+//                }
+//            }
+//        }
 
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-//        val defaultLocation = LatLng(-34.0, 151.0) // Example location
-//        mMap.addMarker(MarkerOptions().position(defaultLocation).title("Marker"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f))
-        addCustomMarker()
+        val defaultLocation = LatLng(-34.0, 151.0) // Example location
+        mMap.addMarker(MarkerOptions().position(defaultLocation).title("Marker"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f))
+       // addCustomMarker()
        // loadStudentLocations()
     }
-    private fun addCustomMarker(){
-       // val location = LatLng(-34.0, 151.0)
-        val markerOptions = MarkerOptions()
-            //.position(location)
-            .title("custom marker")
-            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_map))
-        mMap.addMarker(markerOptions)
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(345.67, 34.68), 20f))  // Adjust as needed
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
-    }
+//    private fun addCustomMarker(){
+//        val location = LatLng(-33.865143, 151.209900)
+//        val markerOptions = MarkerOptions()
+//            .position(location)
+//            .title("custom marker")
+//            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_map))
+//        mMap.addMarker(markerOptions)
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(345.67, 34.68), 15f))  // Adjust as needed
+//        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+//    }
 }

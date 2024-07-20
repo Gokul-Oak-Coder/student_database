@@ -24,14 +24,14 @@ class StudentAdapter(private val onStudentClick: (Student) -> Unit) : ListAdapte
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         val student = getItem(position)
-        holder.bind(student)
-        holder.itemView.setOnClickListener {
-            onStudentClick(student)
-        }
+        holder.bind(student, onStudentClick)
+//        holder.itemView.setOnClickListener {
+//            onStudentClick(student)
+//        }
     }
 
     class StudentViewHolder(private val binding: StudentListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(student: Student) {
+        fun bind(student: Student, onStudentClick: (Student) -> Unit) {
             binding.apply {
                 nameStud.text = "${student.id}, ${student.name}"
                 Log.d("ViewStudentActivity", "passing student imagUri ${student.imagUri}")
@@ -41,6 +41,9 @@ class StudentAdapter(private val onStudentClick: (Student) -> Unit) : ListAdapte
 //                    .placeholder(R.drawable.chotu)
 //                    .error(R.drawable.chotu)
                     .into(binding.imgStud)
+            }
+            binding.detailBtn.setOnClickListener {
+                onStudentClick(student)
             }
         }
     }
