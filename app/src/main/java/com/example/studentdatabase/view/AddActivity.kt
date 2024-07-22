@@ -1,5 +1,6 @@
 package com.example.studentdatabase.view
 
+import android.annotation.SuppressLint
 import android.provider.MediaStore
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -47,6 +48,7 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
         const val DEFAULT_ZOOM_LEVEL = 15f
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)
