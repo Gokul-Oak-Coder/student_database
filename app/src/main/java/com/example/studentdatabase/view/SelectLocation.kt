@@ -7,6 +7,8 @@ import android.location.Address
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -110,17 +112,24 @@ class SelectLocation : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_close -> {
+                // Handle close button click
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
 
-//        val initialLocation = LatLng(-34.0, 151.0) // Example initial location
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initialLocation, 10f))
-//
-//        googleMap.setOnMapClickListener { latLng ->
-//            googleMap.clear()
-//            googleMap.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
-//            // Handle location selection (e.g., save the selected location)
-//        }
     }
 }
