@@ -7,16 +7,26 @@
     android:padding="10dp"
     android:layout_margin="10dp"
     android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/img_stud"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/img_stud1"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        app:cardCornerRadius="60dp"
         android:layout_margin="15dp"
-        android:background="@color/white"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_stud"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/chotu"
+            android:scaleType="centerCrop"/>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/name_stud"
@@ -24,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Name"
-        app:layout_constraintStart_toEndOf="@+id/img_stud"
+        app:layout_constraintStart_toEndOf="@+id/img_stud1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -34,7 +44,7 @@
         android:text="Details"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/img_stud"
+        app:layout_constraintStart_toEndOf="@+id/img_stud1"
         app:layout_constraintTop_toBottomOf="@+id/name_stud" />
 
     <ImageView

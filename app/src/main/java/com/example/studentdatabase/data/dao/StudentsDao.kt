@@ -23,5 +23,12 @@ interface StudentsDao {
     @Query("SELECT * FROM students")
     suspend fun getAllStudents(): List<Student>
 
+//    @Query("SELECT * FROM students")
+//     fun getAllStudents(): LiveData<Student>
+
+
+//    @Query("SELECT * FROM students WHERE user = :user")
+//    suspend fun getStudentsByUser(user: String): List<Student>
+
 
 }

@@ -17,10 +17,17 @@ class StudentsViewModel(private val repository: StudentsRepository) : ViewModel(
         repository.insert(student)
         getAllStudents()
     }
+//    fun getAllStudents(): LiveData<Student> {
+//        return repository.getAllStudents()
+//    }
 
     fun getAllStudents() = viewModelScope.launch {
         _students.postValue(repository.getAllStudents())
     }
+
+//    fun getStudentsByUser(user: String) = viewModelScope.launch {
+//        _students.postValue(repository.getStudentsByUser(user))
+//    }
 
     fun getStudentById(id: Long): LiveData<Student> {
         return repository.getStudentById(id)

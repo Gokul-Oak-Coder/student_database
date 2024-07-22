@@ -4,13 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@drawable/chotu"
+        android:layout_height="350dp"
+        android:background="@drawable/green_inter_log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/chotu_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,17 +29,17 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="320dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rectangle_list"
         android:orientation="vertical"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="@+id/imageView8">
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,9 +55,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="User Name"
+            android:inputType="text"
+            android:singleLine="true"
             android:textColor="@color/blue_green2"
             android:textColorHint="@color/blue_green2"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:errorEnabled="true" />
 
         <EditText
             android:id="@+id/pass"
@@ -54,10 +68,33 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:hint="Password"
+            android:inputType="textPassword"
+            android:singleLine="true"
             android:textColor="@color/blue_green2"
             android:textColorHint="@color/blue_green2"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true" />
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            style="@style/Widget.App.TextInputLayout"-->
+        <!--            android:id="@+id/etPasswordLayout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:errorEnabled="true"-->
+        <!--            app:passwordToggleEnabled="true">-->
 
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                style="@style/Widget.App.TextInputEditText"-->
+        <!--                android:id="@+id/pass"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:hint="Password"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:inputType="textPassword"-->
+        <!--                android:textColor="@color/blue_green2"-->
+        <!--                android:textColorHint="@color/blue_green2"-->
+        <!--                android:textSize="20sp" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
         <TextView
             android:id="@+id/forgetpass"
             android:layout_width="wrap_content"
@@ -71,7 +108,7 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue_green2"
             android:text="LOG IN"
             android:textSize="20sp"
@@ -79,15 +116,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

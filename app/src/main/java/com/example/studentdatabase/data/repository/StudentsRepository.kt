@@ -10,10 +10,17 @@ class StudentsRepository(private val studentDao: StudentsDao) {
         studentDao.insert(student)
     }
 
+//    fun getAllStudents(): LiveData<Student>{
+//        return studentDao.getAllStudents()
+//    }
     suspend fun getAllStudents(): List<Student> {
         return studentDao.getAllStudents()
     }
 
+
+//    suspend fun getStudentsByUser(user: String): List<Student> {
+//        return studentDao.getStudentsByUser(user)
+//    }
 
     fun getStudentById(id: Long): LiveData<Student> {
         return studentDao.getStudentById(id)

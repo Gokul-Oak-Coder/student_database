@@ -1,5 +1,6 @@
 package com.example.studentdatabase.view
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.location.Address
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
@@ -70,7 +72,7 @@ class SelectLocation : AppCompatActivity(), OnMapReadyCallback {
                         val latLng = LatLng(address.latitude, address.longitude)
                         selectedLatLng = latLng
                         googleMap.clear()
-                        googleMap.addMarker(MarkerOptions().position(latLng).title(location))
+                        googleMap.addMarker(MarkerOptions().position(latLng).title(location).icon( BitmapDescriptorFactory.fromResource(R.drawable.pin_loc)))
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                     } else {
                         Toast.makeText(
@@ -89,17 +91,24 @@ class SelectLocation : AppCompatActivity(), OnMapReadyCallback {
         })
             binding.addLoc.setOnClickListener {
                 selectedLatLng?.let {
-                    val intent = Intent(this, AddActivity::class.java).apply {
-                        putExtra("latitude", it.latitude)
-                        putExtra("longitude", it.longitude)
-                    }
-                    startActivity(intent)
+//                    val intent = Intent(this, AddActivity::class.java).apply {
+//                        putExtra("latitude", it.latitude)
+//                        putExtra("longitude", it.longitude)
+//                    }
+//                    startActivity(intent)
+//                    finish()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("lat", it.latitude)
+                    resultIntent.putExtra("long", it.longitude)
+                    setResult(Activity.RESULT_OK, resultIntent)
                     finish()
                 } ?: run {
                     Toast.makeText(this, "Please select a location first", Toast.LENGTH_SHORT).show()
                 }
 
         }
+
+
     }
 
     override fun onMapReady(map: GoogleMap) {

@@ -7,4 +7,26 @@
     </style>
 
     <style name="Theme.StudentDatabase" parent="Base.Theme.StudentDatabase" />
+
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundMode">filled</item>
+        <item name="boxBackgroundColor">?android:attr/colorBackground</item>
+        <item name="boxStrokeColor">?attr/colorControlActivated</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">0dp</item>
+        <item name="boxCornerRadiusTopEnd">0dp</item>
+        <item name="boxCornerRadiusBottomEnd">0dp</item>
+        <item name="boxCornerRadiusBottomStart">0dp</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <!-- Custom TextInputEditText style to make it look like a normal EditText -->
+    <style name="Widget.App.TextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="android:background">?android:attr/editTextBackground</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
 </resources>

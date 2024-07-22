@@ -27,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.squareup.picasso.Picasso
@@ -39,8 +40,12 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
     private var isImageSelected = false
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
-
     private lateinit var studentsViewModel: StudentsViewModel
+
+    companion object {
+        const val SELECT_LOCATION_REQUEST_CODE = 1
+        const val DEFAULT_ZOOM_LEVEL = 15f
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +56,8 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
         val repository = StudentsRepository(database.studentDao())
         val viewModelFactory = StudentViewModelFactory(repository)
 
-        studentsViewModel = ViewModelProvider(this, viewModelFactory).get(StudentsViewModel::class.java)
+        studentsViewModel =
+            ViewModelProvider(this, viewModelFactory).get(StudentsViewModel::class.java)
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
@@ -65,11 +71,13 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
             onBackPressed()
         }
 
+
         binding.studImg.setOnClickListener {
             openImagePicker()
         }
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.small_map_container1) as SupportMapFragment
+        val mapFragment =
+            supportFragmentManager.findFragmentById(R.id.small_map_container1) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         val standard = resources.getStringArray(R.array.standard)
@@ -82,26 +90,45 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.sectionEt.setAdapter(adapter1)
         binding.bloodEt.setAdapter(adapter2)
 
-        val latitude = intent.getDoubleExtra("latitude", 0.0)
-        val longitude = intent.getDoubleExtra("longitude", 0.0)
-        receivedLatLng = if (latitude != 0.0 && longitude != 0.0) {
-            LatLng(latitude, longitude)
-        } else {
-            null
-        }
+//        val latitude = intent.getDoubleExtra("lat", 0.0)
+//        val longitude = intent.getDoubleExtra("long", 0.0)
+//
+//        receivedLatLng = if (latitude != 0.0 && longitude != 0.0) {
+//            LatLng(latitude, longitude)
+//        } else {
+//            null
+//        }
 
-        binding.locLatData.text = "Latitude $latitude"
-        binding.locLongData.text = "Latitude $longitude"
+//        binding.locLatData.text = "Latitude $latitude"
+//        binding.locLongData.text = "Latitude $longitude"
 
+//        binding.selectLocation.setOnClickListener {
+//            val intent = Intent(this, SelectLocation::class.java)
+//            startActivity(intent)
+//            Toast.makeText(this, "Tapped on select location", Toast.LENGTH_SHORT).show()
+//        }
         binding.selectLocation.setOnClickListener {
             val intent = Intent(this, SelectLocation::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, SELECT_LOCATION_REQUEST_CODE)
             Toast.makeText(this, "Tapped on select location", Toast.LENGTH_SHORT).show()
         }
         val dobText = binding.dobEt
         dobText.setOnClickListener {
             showDatePickerDialog(dobText)
         }
+       val loggedInUser = getLoggedInUserFromPreferences()
+
+        binding.imageView5.setOnClickListener {
+            if (loggedInUser != null) {
+                Toast.makeText(this, loggedInUser,Toast.LENGTH_LONG).show()
+                //Log.d("user",loggedInUser)
+            }
+            else{
+                Toast.makeText(this, "May be user is null", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
 
         binding.submitBtn.setOnClickListener {
 
@@ -124,52 +151,63 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
             val zip = binding.zipEt.text.toString()
             val emergency = binding.emergencyEt.text.toString()
 
-            if (name.isNotEmpty() && stand.isNotEmpty() &&
-                sec.isNotEmpty() && dob.isNotEmpty() &&
-                gender.isNotEmpty() && long.isNotEmpty() &&  lat.isNotEmpty() &&
-                school.isNotEmpty() && blood.isNotEmpty() &&
-                father.isNotEmpty() && mother.isNotEmpty() &&
-                address1.isNotEmpty() && city.isNotEmpty() &&
-                state.isNotEmpty() && zip.isNotEmpty() ) {
 
-                val student = Student(
-                    name = name,
-                    standard = stand,
-                    section = sec,
-                    gender = gender,
-                    dob = dob,
-                    latitude = lat ,
-                    longitude = long,
-                    school = school,
-                    blood = blood,
-                    father = father,
-                    mother = mother,
-                    contact = contact,
-                    address1 = address1,
-                    address2 = address2,
-                    city = city,
-                    state = state,
-                    zip = zip,
-                    emergencyContact = emergency,
-                    imagUri = imageUri.toString()
-                )
+                if (name.isNotEmpty() && stand.isNotEmpty() &&
+                    sec.isNotEmpty() && dob.isNotEmpty() &&
+                    gender.isNotEmpty() && long.isNotEmpty() && lat.isNotEmpty() &&
+                    school.isNotEmpty() && blood.isNotEmpty() &&
+                    father.isNotEmpty() && mother.isNotEmpty() &&
+                    address1.isNotEmpty() && city.isNotEmpty() &&
+                    state.isNotEmpty() && zip.isNotEmpty()
+                ) {
 
-                studentsViewModel.insert(student)
-                Log.d("img", "img uri ${student.imagUri}")
-                Toast.makeText(this, "Student added successfully", Toast.LENGTH_SHORT).show()
-                finish() // Close the activity after saving
-            } else {
-                Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show()
-            }
+                    val student = Student(
+                        name = name,
+                        standard = stand,
+                        section = sec,
+                        gender = gender,
+                        dob = dob,
+                        latitude = lat,
+                        longitude = long,
+                        school = school,
+                        blood = blood,
+                        father = father,
+                        mother = mother,
+                        contact = contact,
+                        address1 = address1,
+                        address2 = address2,
+                        city = city,
+                        state = state,
+                        zip = zip,
+                        emergencyContact = emergency,
+                        imagUri = imageUri.toString(),
+                        //user = loggedInUser
+                    )
+
+                    studentsViewModel.insert(student)
+                    Log.d("img", "img uri ${student.imagUri}")
+                    Toast.makeText(this, "Student added successfully", Toast.LENGTH_SHORT).show()
+                    finish() // Close the activity after saving
+                } else {
+                    Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show()
+                }
         }
 
     }
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
+//        receivedLatLng?.let {
+//            googleMap.addMarker(MarkerOptions().position(it).title("Selected Location"))
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(it, 15f))
+//        }
+
+        googleMap.uiSettings.isZoomControlsEnabled = true
+
+        // Check if we have a receivedLatLng and use it to set the map location
         receivedLatLng?.let {
-            googleMap.addMarker(MarkerOptions().position(it).title("Selected Location"))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(it, 15f))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(it, DEFAULT_ZOOM_LEVEL))
+            map.addMarker(MarkerOptions().position(it).title("Selected Location").icon( BitmapDescriptorFactory.fromResource(R.drawable.pin_loc)))
         }
     }
 
@@ -199,20 +237,6 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-//            imageUri = data.data
-//            try {
-//                val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
-//                Glide.with(this).load(imageUri).into(binding.studImg)
-//                isImageSelected = true
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
@@ -223,5 +247,34 @@ class AddActivity : AppCompatActivity(), OnMapReadyCallback {
                 .load(imageUri)
                 .into(binding.studImg)
         }
+        if (requestCode == SELECT_LOCATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val latitude = data?.getDoubleExtra("lat", 0.0) ?: 0.0
+            val longitude = data?.getDoubleExtra("long", 0.0) ?: 0.0
+            binding.locLatData.text = "Latitude $latitude"
+            binding.locLongData.text = "Latitude $longitude"
+            val receivedLatLng = if (latitude != 0.0 && longitude != 0.0) {
+                LatLng(latitude, longitude)
+            } else {
+                null
+            }
+
+            if (receivedLatLng != null) {
+                // Update the map if it's already ready
+                if (::googleMap.isInitialized) {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(receivedLatLng, DEFAULT_ZOOM_LEVEL))
+                    googleMap.addMarker(MarkerOptions().position(receivedLatLng).title("Selected Location").icon( BitmapDescriptorFactory.fromResource(R.drawable.pin_loc)))
+                } else {
+                    // Save the location for when the map is ready
+                    this.receivedLatLng = receivedLatLng
+                }
+                Toast.makeText(this, "Selected location: $receivedLatLng", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No location selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun getLoggedInUserFromPreferences(): String? {
+        val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        return sharedPreferences.getString("logged_in_user", null)
     }
 }

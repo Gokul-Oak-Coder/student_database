@@ -4,36 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.SignupActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:background="@drawable/chotu_signup"
+        android:background="@drawable/green_inter_sign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/chotu_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="390dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="230dp"
         android:background="@drawable/rectangle_list"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="@+id/imageView">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="SIGN IN"
+            android:text="SIGN UP"
             android:textColor="@color/dark_green"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -42,8 +54,8 @@
             android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:hint="User Name"
+            android:singleLine="true"
             android:textColor="@color/blue_green2"
             android:textColorHint="@color/blue_green2"
             android:textSize="20sp" />
@@ -54,6 +66,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:hint="Phone no"
+            android:singleLine="true"
+            android:inputType="phone"
             android:textColor="@color/blue_green2"
             android:textColorHint="@color/blue_green2"
             android:textSize="20sp" />
@@ -64,6 +78,10 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:hint="Password"
+            app:passwordToggleEnabled="true"
+            android:inputType="textPassword"
+            app:errorEnabled="true"
+            android:singleLine="true"
             android:textColor="@color/blue_green2"
             android:textColorHint="@color/blue_green2"
             android:textSize="20sp" />
@@ -74,6 +92,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:hint="Confirm Password"
+            app:passwordToggleEnabled="true"
+            android:singleLine="true"
             android:textColor="@color/blue_green2"
             android:textColorHint="@color/blue_green2"
             android:textSize="20sp" />
@@ -83,7 +103,7 @@
             android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:backgroundTint="@color/blue_green2"
             android:text="SIGN UP"
             android:textSize="20sp"
@@ -98,8 +118,8 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -107,7 +127,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account?"
+            android:text="Already have an account?"
             android:textColor="@color/light_green" />
 
         <TextView

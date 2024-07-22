@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "students")
 data class Student(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
-    var imagUri: String? = null,
+    var imagUri: String?,
     val name: String,
     var standard: String,
     var section : String,
@@ -25,5 +25,6 @@ data class Student(
     val zip : String,
     val emergencyContact : String? = null,
     val latitude: String,
-    val longitude: String
+    val longitude: String,
+    //val user: String
 )

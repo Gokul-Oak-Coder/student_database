@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.MainActivity">
 
     <ImageView
@@ -27,10 +28,9 @@
 
     <ImageView
         android:id="@+id/log_out"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:background="@drawable/ovel"
         android:src="@drawable/log_out"
         app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

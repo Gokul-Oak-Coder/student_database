@@ -62,7 +62,16 @@ class ViewStudentActivity : AppCompatActivity() {
             students?.let { studentAdapter.submitList(it) }
         })
 
+//        val loggedInUser = getLoggedInUserFromPreferences()
+//        if (loggedInUser != null) {
+//            studentsViewModel.getStudentsByUser(loggedInUser)
+//        }
+
         studentsViewModel.getAllStudents()
+    }
+    private fun getLoggedInUserFromPreferences(): String? {
+        val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        return sharedPreferences.getString("logged_in_user", null)
     }
 }
 

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".view.SignupActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="850dp"
+        android:background="@drawable/green_inter_sign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="700dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/chotu_log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="890dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="450dp"
+        android:background="@drawable/rectangle_list"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="SIGN UP"
+            android:layout_margin="10dp"
+            android:textColor="@color/dark_green"
+            android:textSize="80sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="User Name"
+            android:layout_margin="10dp"
+            android:textSize="50sp"
+            android:singleLine="true"
+            android:textColor="@color/blue_green2"
+            android:textColorHint="@color/blue_green2" />
+
+        <EditText
+            android:id="@+id/phone_no"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:hint="Phone no"
+            android:layout_margin="10dp"
+            android:textSize="50sp"
+            android:singleLine="true"
+            android:inputType="phone"
+            android:textColor="@color/blue_green2"
+            android:textColorHint="@color/blue_green2" />
+
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:hint="Password"
+            app:passwordToggleEnabled="true"
+            android:inputType="textPassword"
+            android:layout_margin="10dp"
+            android:textSize="50sp"
+            app:errorEnabled="true"
+            android:singleLine="true"
+            android:textColor="@color/blue_green2"
+            android:textColorHint="@color/blue_green2" />
+
+        <EditText
+            android:id="@+id/conf_pass"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:hint="Confirm Password"
+            app:passwordToggleEnabled="true"
+            android:singleLine="true"
+            android:layout_margin="10dp"
+            android:textSize="50sp"
+            android:textColor="@color/blue_green2"
+            android:textColorHint="@color/blue_green2"
+            />
+
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/blue_green2"
+            android:text="SIGN UP"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account?"
+            android:textSize="30sp"
+            android:textColor="@color/light_green" />
+
+        <TextView
+            android:id="@+id/signin_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" SignIn"
+            android:textSize="30sp"
+            android:textColor="@color/blue_green2" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/progress_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_green"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

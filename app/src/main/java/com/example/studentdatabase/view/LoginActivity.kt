@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.studentdatabase.databinding.ActivityLoginBinding
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         signup.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         loginBtn.setOnClickListener {
@@ -57,7 +59,14 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                         val user = auth.currentUser
-                      //  updateUI(user)
+                        if (user != null) {
+                            Log.d("YourActivity", "User UID: ${user.uid}")
+                            saveUserToPreferences(user.uid)
+                        } else {
+                            Log.e("YourActivity", "User is null.")
+                            Toast.makeText(baseContext, "Failed to retrieve user.", Toast.LENGTH_SHORT).show()
+                        }
+
                     } else {
                         Toast.makeText(
                             baseContext,
@@ -68,6 +77,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+    }
+    private fun saveUserToPreferences(uid: String) {
+        val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("logged_in_user", uid)
+        editor.apply()
     }
     public override fun onStart() {
         super.onStart()
