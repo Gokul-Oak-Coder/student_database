@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.studentdatabase.databinding.ActivitySignupBinding
@@ -27,17 +28,17 @@ class SignupActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
         binding.btnSignup.setOnClickListener {
-            // Retrieve the email and password values here
-            val email = binding.userName.text.toString()
-            val password = binding.pass.text.toString()
+            // Retrieve the email, password, phone, and confirm password values
+            val email = binding.userName.text.toString().trim()
+            val password = binding.pass.text.toString().trim()
+            val phone = binding.phoneNo.text.toString().trim()
+            val conPass = binding.confPass.text.toString().trim()
 
             // Set the ProgressBar visibility
             binding.progressBar.visibility = View.VISIBLE
-            // binding.progressLayer.visibility = View.VISIBLE
 
-            // Check if email and password are empty
+            // Check if any field is empty
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show()
                 binding.progressBar.visibility = View.GONE
@@ -48,29 +49,81 @@ class SignupActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 return@setOnClickListener
             }
+            if (TextUtils.isEmpty(conPass)) {
+                Toast.makeText(this, "Please confirm your password", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
+            if (TextUtils.isEmpty(phone)) {
+                Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
 
-            // Create user with email and password
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    // Hide the ProgressBar
-                    binding.progressBar.visibility = View.GONE
-                    // binding.progressLayer.visibility = View.GONE
 
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Enter a valid email address (e.g., example@email.com)", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
+
+
+            val phonePattern = "^[0-9]{10}$"
+            if (!phone.matches(phonePattern.toRegex())) {
+                Toast.makeText(this, "Enter a valid phone number (should contain exactly 10 numbers)", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
+            if(password.length < 6 ){
+                Toast.makeText(this, "Password should contain atleast 6 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (password != conPass) {
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                return@setOnClickListener
+            }
+
+
+            // Check if email already exists
+            auth.fetchSignInMethodsForEmail(email)
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // If sign up is successful, navigate to the login activity
-                        val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                        val user = auth.currentUser
-                        // updateUI(user)
+                        val signInMethods = task.result?.signInMethods
+                        if (signInMethods != null && signInMethods.isNotEmpty()) {
+                            // Email is already in use
+                            Toast.makeText(this, "Email already in use", Toast.LENGTH_SHORT).show()
+                            binding.progressBar.visibility = View.GONE
+                        } else {
+                            // Email is not in use, proceed with registration
+                            auth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(this) { signUpTask ->
+                                    // Hide the ProgressBar
+                                    binding.progressBar.visibility = View.GONE
+
+                                    if (signUpTask.isSuccessful) {
+                                        // If sign up is successful, navigate to the login activity
+                                        val intent = Intent(this, LoginActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    } else {
+                                        // If sign up fails, display a message to the user
+                                        Toast.makeText(
+                                            baseContext,
+                                            "Authentication failed.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                        }
                     } else {
-                        // If sign up fails, display a message to the user
+                        // If fetchSignInMethodsForEmail fails, display a message to the user
                         Toast.makeText(
                             baseContext,
-                            "Authentication failed.",
+                            "Error checking email.",
                             Toast.LENGTH_SHORT
                         ).show()
-                        // updateUI(null)
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
         }
